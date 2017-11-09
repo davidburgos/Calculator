@@ -1,9 +1,11 @@
 package com.davidburgos.calculator.mvp.view;
 
 import android.app.Activity;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
+import android.widget.Toast;
 
 import com.davidburgos.calculator.R;
 import com.davidburgos.calculator.util.bus.RxBus;
@@ -38,6 +40,10 @@ public class CalculatorView extends ActivityView {
 
     public void setResult(String value) {
         this.result.setText(value);
+    }
+
+    public void showMessage(@StringRes int messageId) {
+        Toast.makeText(getContext(), messageId, Toast.LENGTH_LONG).show();
     }
 
     @OnItemSelected(R.id.calculator_operators)

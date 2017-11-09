@@ -3,6 +3,7 @@ package com.davidburgos.calculator.mvp.presenter;
 import android.app.Activity;
 import android.text.TextUtils;
 
+import com.davidburgos.calculator.R;
 import com.davidburgos.calculator.mvp.model.CalculatorModel;
 import com.davidburgos.calculator.mvp.model.Operators;
 import com.davidburgos.calculator.mvp.view.CalculatorView;
@@ -14,7 +15,7 @@ import com.davidburgos.calculator.util.bus.observers.CalculatorSecondValueBusObs
 
 public class CalculatorPresenter {
 
-    private final String TAG = CalculatorPresenter.class.getSimpleName();
+    private static final int UNKNOWN_OPERATOR = -1;
     private CalculatorModel model;
     private CalculatorView view;
 
@@ -25,21 +26,33 @@ public class CalculatorPresenter {
 
     private void onSolveButtonPressed() {
 
-        int result = 0;
+        int result = UNKNOWN_OPERATOR;
 
         switch (model.getOperator()) {
             case PLUS:
                 result = model.getFirstValue() + model.getSecondValue();
                 break;
             case UNKNOWN:
-                result = -1;
-                break;
+                view.showMessage(R.string.error_operator_unknown);
+                return;
         }
         view.setResult(String.valueOf(result));
     }
 
-    private boolean isNumber(String value) {
-        return !TextUtils.isEmpty(value) && TextUtils.isDigitsOnly(value);
+    private void onFirstValueChange(int value) {
+        model.setFirstValue(value);
+    }
+
+    private void onSecondValueChange(int value) {
+        model.setSecondValue(value);
+    }
+
+    private void onOperatorChange(String newOperator) {
+        if (!TextUtils.isEmpty(newOperator)) {
+            model.setOperator(Operators.fromValue(newOperator));
+        } else {
+            model.setOperator(Operators.UNKNOWN);
+        }
     }
 
     public void register() {
@@ -76,22 +89,6 @@ public class CalculatorPresenter {
                 onSecondValueChange(value.getValue());
             }
         });
-    }
-
-    private void onFirstValueChange(int value) {
-        model.setFirstValue(value);
-    }
-
-    private void onSecondValueChange(int value) {
-        model.setSecondValue(value);
-    }
-
-    private void onOperatorChange(String newOperator) {
-        if (!TextUtils.isEmpty(newOperator)) {
-            model.setOperator(Operators.fromValue(newOperator));
-        } else {
-            model.setOperator(Operators.UNKNOWN);
-        }
     }
 
     public void unregister() {
