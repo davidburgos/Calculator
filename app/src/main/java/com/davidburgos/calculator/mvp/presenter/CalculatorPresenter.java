@@ -1,7 +1,7 @@
 package com.davidburgos.calculator.mvp.presenter;
 
 import android.app.Activity;
-import android.text.TextUtils;
+import android.support.annotation.NonNull;
 
 import com.davidburgos.calculator.R;
 import com.davidburgos.calculator.mvp.model.CalculatorModel;
@@ -30,7 +30,7 @@ public class CalculatorPresenter {
 
         switch (model.getOperator()) {
             case PLUS:
-                result = model.getFirstValue() + model.getSecondValue();
+                result = sum(model.getFirstValue(), model.getSecondValue());
                 break;
             case UNKNOWN:
                 view.showMessage(R.string.error_operator_unknown);
@@ -47,12 +47,16 @@ public class CalculatorPresenter {
         model.setSecondValue(value);
     }
 
-    private void onOperatorChange(String newOperator) {
-        if (!TextUtils.isEmpty(newOperator)) {
+    private void onOperatorChange(@NonNull String newOperator) {
+        if (!newOperator.isEmpty()) {
             model.setOperator(Operators.fromValue(newOperator));
         } else {
             model.setOperator(Operators.UNKNOWN);
         }
+    }
+
+    int sum(int value1, int value2) {
+        return value1 + value2;
     }
 
     public void register() {

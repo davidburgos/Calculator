@@ -1,7 +1,5 @@
 package com.davidburgos.calculator.mvp.model;
 
-import android.text.TextUtils;
-
 public enum Operators {
 
     PLUS("+"),
@@ -15,7 +13,7 @@ public enum Operators {
 
     public static Operators fromValue(String value) {
         for (Operators val : Operators.values()) {
-            if (TextUtils.equals(val.operator, value)) {
+            if (val.operator.equals(value)) {
                 return val;
             }
         }
