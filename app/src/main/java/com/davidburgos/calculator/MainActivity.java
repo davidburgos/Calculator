@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.presenter = new CalculatorPresenter(new CalculatorModel(), new CalculatorView(this));
+        presenter = new CalculatorPresenter(new CalculatorModel(), new CalculatorView(this));
     }
 
     @Override

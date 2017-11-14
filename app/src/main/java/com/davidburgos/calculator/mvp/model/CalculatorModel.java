@@ -2,8 +2,9 @@ package com.davidburgos.calculator.mvp.model;
 
 public class CalculatorModel {
 
-    private int firstValue = 0;
-    private int secondValue = 0;
+    private static final int ZERO_INT = 0;
+    private int firstValue = ZERO_INT;
+    private int secondValue = ZERO_INT;
     private Operators operator = Operators.UNKNOWN;
 
     public int getFirstValue() {

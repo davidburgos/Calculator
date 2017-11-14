@@ -39,7 +39,7 @@ public class CalculatorView extends ActivityView {
     }
 
     public void setResult(String value) {
-        this.result.setText(value);
+        result.setText(value);
     }
 
     public void showMessage(@StringRes int messageId) {
