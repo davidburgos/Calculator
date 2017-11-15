@@ -17,8 +17,7 @@
             android:id="@+id/calculator_first_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:text="0" />
+            android:inputType="number" />
 
         <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/calculator_operators"
@@ -31,8 +30,7 @@
             android:id="@+id/calculator_second_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:text="0" />
+            android:inputType="number" />
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -44,8 +42,7 @@
             android:id="@+id/calculator_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/calculator_default_padding"
-            android:text="0" />
+            android:padding="@dimen/calculator_default_padding" />
     </LinearLayout>
 
     <android.support.v7.widget.AppCompatButton

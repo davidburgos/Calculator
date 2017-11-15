@@ -10,6 +10,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 public class CalculatorPresenterTest {
 
@@ -20,7 +26,7 @@ public class CalculatorPresenterTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        this.presenter = new CalculatorPresenter(model, view);
+        presenter = new CalculatorPresenter(model, view);
     }
 
     @Test
@@ -29,7 +35,21 @@ public class CalculatorPresenterTest {
     }
 
     @Test
-    public void shouldSumTwoValues() throws Exception {
-        assertEquals(20, presenter.sum(10, 10));
+    public void shouldShowMessageWhenOperatorIsUnknown() throws Exception {
+        when(model.getOperator()).thenReturn(Operators.UNKNOWN);
+        presenter.onSolveButtonPressed();
+        verify(view).showMessage(anyInt());
+        verify(view, never()).setResult(anyString());
+        verifyNoMoreInteractions(view);
+    }
+
+    @Test
+    public void shouldReturnSumOfTwoIntValues() throws Exception {
+        when(model.getOperator()).thenReturn(Operators.PLUS);
+        when(model.getFirstValue()).thenReturn(10);
+        when(model.getSecondValue()).thenReturn(20);
+        presenter.onSolveButtonPressed();
+        verify(view).setResult("30");
+        verifyNoMoreInteractions(view);
     }
 }

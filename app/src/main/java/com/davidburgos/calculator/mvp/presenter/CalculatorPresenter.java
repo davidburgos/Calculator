@@ -9,9 +9,8 @@ import com.davidburgos.calculator.mvp.model.Operators;
 import com.davidburgos.calculator.mvp.view.CalculatorView;
 import com.davidburgos.calculator.util.bus.RxBus;
 import com.davidburgos.calculator.util.bus.observers.CalculatorButtonBusObserver;
-import com.davidburgos.calculator.util.bus.observers.CalculatorFirstValueBusObserver;
 import com.davidburgos.calculator.util.bus.observers.CalculatorOperatorBusObserver;
-import com.davidburgos.calculator.util.bus.observers.CalculatorSecondValueBusObserver;
+import com.davidburgos.calculator.util.bus.observers.CalculatorValueBusObserver;
 
 public class CalculatorPresenter {
 
@@ -24,7 +23,7 @@ public class CalculatorPresenter {
         this.view = view;
     }
 
-    private void onSolveButtonPressed() {
+    void onSolveButtonPressed() {
 
         int result = UNKNOWN_OPERATOR;
 
@@ -55,7 +54,7 @@ public class CalculatorPresenter {
         }
     }
 
-    int sum(int value1, int value2) {
+    private int sum(int value1, int value2) {
         return value1 + value2;
     }
 
@@ -80,17 +79,17 @@ public class CalculatorPresenter {
             }
         });
 
-        RxBus.subscribe(activity, new CalculatorFirstValueBusObserver() {
+        RxBus.subscribe(activity, new CalculatorValueBusObserver() {
             @Override
-            public void onEvent(CalculatorFirstValueBusObserver.FirstValue value) {
-                onFirstValueChange(value.getValue());
-            }
-        });
-
-        RxBus.subscribe(activity, new CalculatorSecondValueBusObserver() {
-            @Override
-            public void onEvent(CalculatorSecondValueBusObserver.SecondValue value) {
-                onSecondValueChange(value.getValue());
+            public void onEvent(Value value) {
+                switch (value.getPosition()) {
+                    case 1:
+                        onFirstValueChange(value.getValue());
+                        break;
+                    case 2:
+                        onSecondValueChange(value.getValue());
+                        break;
+                }
             }
         });
     }
