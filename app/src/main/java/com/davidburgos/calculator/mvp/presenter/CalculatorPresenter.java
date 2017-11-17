@@ -25,11 +25,20 @@ public class CalculatorPresenter {
 
     void onSolveButtonPressed() {
 
-        int result = UNKNOWN_OPERATOR;
+        float result = UNKNOWN_OPERATOR;
 
         switch (model.getOperator()) {
             case PLUS:
                 result = sum(model.getFirstValue(), model.getSecondValue());
+                break;
+            case MINUS:
+                result = substraction(model.getFirstValue(), model.getSecondValue());
+                break;
+            case MULTIPLY:
+                result = multiply(model.getFirstValue(), model.getSecondValue());
+                break;
+            case DIVIDE:
+                result = divide(model.getFirstValue(), model.getSecondValue());
                 break;
             case UNKNOWN:
                 view.showMessage(R.string.error_operator_unknown);
@@ -38,11 +47,11 @@ public class CalculatorPresenter {
         view.setResult(String.valueOf(result));
     }
 
-    private void onFirstValueChange(int value) {
+    private void onFirstValueChange(float value) {
         model.setFirstValue(value);
     }
 
-    private void onSecondValueChange(int value) {
+    private void onSecondValueChange(float value) {
         model.setSecondValue(value);
     }
 
@@ -54,8 +63,25 @@ public class CalculatorPresenter {
         }
     }
 
-    private int sum(int value1, int value2) {
+    private float sum(float value1, float value2) {
         return value1 + value2;
+    }
+
+    private float substraction(float value1, float value2) {
+        return value1 - value2;
+    }
+
+    private float multiply(float value1, float value2) {
+        return value1 * value2;
+    }
+
+    private float divide(float value1, float value2) {
+        if (value2 != 0)
+            return value1 / value2;
+        else {
+            view.showMessage(R.string.error_value_cannot_be_zero);
+            return 0F;
+        }
     }
 
     public void register() {

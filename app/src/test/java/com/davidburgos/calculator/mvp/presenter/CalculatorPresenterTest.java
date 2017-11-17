@@ -19,6 +19,9 @@ import static org.mockito.Mockito.when;
 
 public class CalculatorPresenterTest {
 
+    private static final float ZERO_FLOAT = 0F;
+    private static final float FIRST_FLOAT_VALUE = 10F;
+    private static final float SECOND_FLOAT_VALUE = 10F;
     private @Mock CalculatorModel model;
     private @Mock CalculatorView view;
     private CalculatorPresenter presenter;
@@ -31,7 +34,47 @@ public class CalculatorPresenterTest {
 
     @Test
     public void calculateOperatorFromSymbol() throws Exception {
-        assertEquals(Operators.PLUS, Operators.fromValue("+"));
+        assertEquals(Operators.DIVIDE, Operators.fromValue("/"));
+    }
+
+    @Test
+    public void shouldSumOfTwoIntValues() throws Exception {
+        when(model.getOperator()).thenReturn(Operators.PLUS);
+        when(model.getFirstValue()).thenReturn(FIRST_FLOAT_VALUE);
+        when(model.getSecondValue()).thenReturn(SECOND_FLOAT_VALUE);
+        presenter.onSolveButtonPressed();
+        verify(view).setResult(String.valueOf(FIRST_FLOAT_VALUE + SECOND_FLOAT_VALUE));
+        verifyNoMoreInteractions(view);
+    }
+
+    @Test
+    public void shouldSubtractTwoIntValues() throws Exception {
+        when(model.getOperator()).thenReturn(Operators.MINUS);
+        when(model.getFirstValue()).thenReturn(FIRST_FLOAT_VALUE);
+        when(model.getSecondValue()).thenReturn(SECOND_FLOAT_VALUE);
+        presenter.onSolveButtonPressed();
+        verify(view).setResult(String.valueOf(FIRST_FLOAT_VALUE - SECOND_FLOAT_VALUE));
+        verifyNoMoreInteractions(view);
+    }
+
+    @Test
+    public void shouldMultiplyTwoIntValues() throws Exception {
+        when(model.getOperator()).thenReturn(Operators.MULTIPLY);
+        when(model.getFirstValue()).thenReturn(FIRST_FLOAT_VALUE);
+        when(model.getSecondValue()).thenReturn(SECOND_FLOAT_VALUE);
+        presenter.onSolveButtonPressed();
+        verify(view).setResult(String.valueOf(FIRST_FLOAT_VALUE * SECOND_FLOAT_VALUE));
+        verifyNoMoreInteractions(view);
+    }
+
+    @Test
+    public void shouldDivideTwoIntValues() throws Exception {
+        when(model.getOperator()).thenReturn(Operators.DIVIDE);
+        when(model.getFirstValue()).thenReturn(FIRST_FLOAT_VALUE);
+        when(model.getSecondValue()).thenReturn(SECOND_FLOAT_VALUE);
+        presenter.onSolveButtonPressed();
+        verify(view).setResult(String.valueOf(FIRST_FLOAT_VALUE / SECOND_FLOAT_VALUE));
+        verifyNoMoreInteractions(view);
     }
 
     @Test
@@ -44,12 +87,13 @@ public class CalculatorPresenterTest {
     }
 
     @Test
-    public void shouldReturnSumOfTwoIntValues() throws Exception {
-        when(model.getOperator()).thenReturn(Operators.PLUS);
-        when(model.getFirstValue()).thenReturn(10);
-        when(model.getSecondValue()).thenReturn(20);
+    public void shouldShowMessageWhenSecondValueIsZero() throws Exception {
+        when(model.getOperator()).thenReturn(Operators.DIVIDE);
+        when(model.getFirstValue()).thenReturn(FIRST_FLOAT_VALUE);
+        when(model.getSecondValue()).thenReturn(ZERO_FLOAT);
         presenter.onSolveButtonPressed();
-        verify(view).setResult("30");
+        verify(view).showMessage(anyInt());
+        verify(view).setResult(anyString());
         verifyNoMoreInteractions(view);
     }
 }

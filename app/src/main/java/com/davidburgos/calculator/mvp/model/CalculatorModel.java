@@ -2,24 +2,24 @@ package com.davidburgos.calculator.mvp.model;
 
 public class CalculatorModel {
 
-    private static final int ZERO_INT = 0;
-    private int firstValue = ZERO_INT;
-    private int secondValue = ZERO_INT;
+    private static final float ZERO_FLOAT = 0F;
+    private float firstValue = ZERO_FLOAT;
+    private float secondValue = ZERO_FLOAT;
     private Operators operator = Operators.UNKNOWN;
 
-    public int getFirstValue() {
+    public float getFirstValue() {
         return firstValue;
     }
 
-    public void setFirstValue(int firstValue) {
+    public void setFirstValue(float firstValue) {
         this.firstValue = firstValue;
     }
 
-    public int getSecondValue() {
+    public float getSecondValue() {
         return secondValue;
     }
 
-    public void setSecondValue(int secondValue) {
+    public void setSecondValue(float secondValue) {
         this.secondValue = secondValue;
     }
 
