@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Calculator</string>
+    <string name="calculator_solve_title">Solve</string>
+    <string name="calculator_equals">=</string>
+    <string name="error_operator_unknown">Unknown Operator</string>
+    <string name="error_value_cannot_be_zero">Second value cannot be zero</string>
 </resources>
